@@ -15,10 +15,9 @@ export class AppController {
     return this.authService.login(request.user);
   }
 
-
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() request) {
-    return request.user;
+      return request.user;
   }
 }
