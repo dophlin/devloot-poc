@@ -17,19 +17,29 @@ import { BusinessesService } from './businesses/businesses.service';
 import { Admin } from './admins/entity/admin.entity';
 import { AdminsController } from './admins/admins.controller';
 import { AdminsService } from './admins/admins.service';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './auth/guard/roles.guard';
 
 @Module({
-  imports: [AuthModule, TypeOrmModule.forRoot({
-    type: "sqlite",
-    database: ":memory:",
-    dropSchema: true,
-    entities: [User, Customer, Business, Admin],
-    synchronize: true,
-    logging: true
-  }), UsersModule, CustomersModule, AdminsModule, BusinessesModule],
+  imports: [
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
+    }),
+    AuthModule, TypeOrmModule.forRoot({
+      type: "sqlite",
+      database: ":memory:",
+      dropSchema: true,
+      entities: [User, Customer, Business, Admin],
+      synchronize: true,
+      logging: true
+    }), UsersModule, CustomersModule, AdminsModule, BusinessesModule],
   controllers: [AppController, CustomersController, BusinessesController, AdminsController],
-  providers: [AppService, CustomersService, BusinessesService, AdminsService],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard
+    },
+    AppService, CustomersService, BusinessesService, AdminsService],
 })
 export class AppModule { }
