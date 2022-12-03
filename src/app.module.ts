@@ -17,6 +17,8 @@ import { BusinessesService } from './businesses/businesses.service';
 import { Admin } from './admins/entity/admin.entity';
 import { AdminsController } from './admins/admins.controller';
 import { AdminsService } from './admins/admins.service';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/guard/roles.guard';
 
 @Module({
   imports: [AuthModule, TypeOrmModule.forRoot({

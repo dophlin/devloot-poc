@@ -36,7 +36,7 @@ export class UsersService {
     }
 
     findByUsername(username: string): Promise<User> {
-        if (username === this.superAdmin.username) return Promise.resolve(User.fromAdminObject(this.superAdmin));
+        if (username === this.superAdmin.username) return Promise.resolve(User.fromSuperAdminObject(this.superAdmin));
         return this.usersRepository.findOneBy({ username });
     }
 

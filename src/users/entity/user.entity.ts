@@ -19,12 +19,12 @@ export class User {
     @Column()
     role: Role;
 
-    static fromAdminObject(superAdmin: { id: number; firstName: string; lastName: string; username: string; password: string; email: string; }): User {
+    static fromSuperAdminObject(superAdmin: { id: number; firstName: string; lastName: string; username: string; password: string; email: string; }): User {
         const theUser = new User();
         theUser.password = superAdmin.password;
         theUser.username = superAdmin.username;
         theUser.email = superAdmin.email;
-        theUser.role = Role.Admin;
+        theUser.role = Role.SuperAdmin;
         return theUser;
     }
     
