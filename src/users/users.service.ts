@@ -9,6 +9,9 @@ import { jwtConfigs } from '../auth/configs';
 @Injectable()
 export class UsersService {
 
+    // Please note, this is only a PoC, otherwise in the production projects 
+    // the credentials of the super admin usually are injected into the system 
+    // by environment variables or another third-party system configuration.
     private readonly superAdmin = {
         id: 0,
         firstName: 'admin',
